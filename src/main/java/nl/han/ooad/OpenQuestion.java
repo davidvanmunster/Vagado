@@ -14,10 +14,15 @@ public class OpenQuestion extends Question {
     @Override
     public boolean checkAnswer(Answer inputAnswer) {
         for (Answer correctAnswer : correctAnswers) {
-            if (inputAnswer.getAnswer() == correctAnswer.getAnswer()) {
+            if (inputAnswer.getAnswer().equals(correctAnswer.getAnswer())) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public String getQuestion() {
+        return this.question;
     }
 }

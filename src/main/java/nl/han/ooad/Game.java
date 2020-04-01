@@ -8,7 +8,7 @@ public class Game {
     private Quiz currentQuiz;
     private List<Quiz> quizzes = new ArrayList<>();
     private Player player;
-    private int currentQuestion;
+    private int currentQuestionIndex = 0;
 
     public Game(Player player) {
         this.player = player;
@@ -31,10 +31,24 @@ public class Game {
 
     public void selectQuiz(int quizId) {
         currentQuiz = quizzes.get(quizId);
-        currentQuestion = 0;
+        currentQuestionIndex = 0;
     }
 
-    public void answerQuestion(Answer inputAnswer, int currentQuestion) {
-//        currentQuiz
+    public boolean answerQuestion(Answer inputAnswer) {
+        boolean checkedAnswer = currentQuiz.answerQuestion(inputAnswer, currentQuestionIndex);
+        currentQuestionIndex++;
+        return checkedAnswer;
+    }
+
+    public void printAnswerFeedback(boolean checkedAnswer) {
+        if (checkedAnswer) {
+            System.out.println("Correct answer!");
+        } else {
+            System.out.println("Incorrect answer!");
+        }
+    }
+
+    public Question getCurrentQuestion() {
+        return currentQuiz.getQuestion(currentQuestionIndex);
     }
 }

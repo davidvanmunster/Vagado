@@ -6,7 +6,7 @@ import java.util.List;
 public class Quiz {
 
     private List<Question> questions = new ArrayList<>();
-    private List<Boolean> playerAnswers;
+    private List<Boolean> playerAnswers = new ArrayList<>();
     private int highscore;
     private int price;
     private boolean unlocked;
@@ -28,5 +28,9 @@ public class Quiz {
 
     public void addMultipleChoiceQuestion(String question, Answer correctAnswer, List<Answer> wrongAnswers) {
         questions.add(new MultipleChoiceQuestion(question, correctAnswer, wrongAnswers));
+    }
+
+    public Question getQuestion(int index) {
+        return questions.get(index);
     }
 }

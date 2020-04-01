@@ -8,14 +8,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OpenQuestionTest {
+class MultipleChoiceQuestionTest {
 
-    private OpenQuestion sut;
+    private MultipleChoiceQuestion sut;
 
     @BeforeEach
     void setUp() {
-        sut = new OpenQuestion("Test question?", new ArrayList<>(List.of(
-                new Answer("yes")
+        sut = new MultipleChoiceQuestion("Test question?", new Answer("yes"), new ArrayList<>(List.of(
+                new Answer("no"),
+                new Answer("maybe"),
+                new Answer("yaes")
         )));
     }
 
@@ -27,7 +29,7 @@ class OpenQuestionTest {
 
     @Test
     void checkAnswerReturnsFalseIfIncorrect() {
-        Answer testAnswer = new Answer("no");
+        Answer testAnswer = new Answer("maybe");
         assertEquals(false, sut.checkAnswer(testAnswer));
     }
 }
