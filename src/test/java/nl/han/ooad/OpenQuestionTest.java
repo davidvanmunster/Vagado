@@ -27,7 +27,7 @@ class OpenQuestionTest {
 
     @Test
     void checkAnswerReturnsFalseIfIncorrect() {
-        Answer testAnswer = new Answer("no");
+        Answer testAnswer = new Answer("noq");
         assertEquals(false, sut.checkAnswer(testAnswer));
     }
 }
