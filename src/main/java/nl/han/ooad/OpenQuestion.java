@@ -14,7 +14,7 @@ public class OpenQuestion extends Question {
     @Override
     public boolean checkAnswer(Answer inputAnswer) {
         for (Answer correctAnswer : correctAnswers) {
-            if (inputAnswer.getAnswer().equals(correctAnswer.getAnswer())) {
+            if (inputAnswer.getAnswer().toLowerCase().equals(correctAnswer.getAnswer())) {
                 return true;
             }
         }

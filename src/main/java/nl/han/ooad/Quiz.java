@@ -30,6 +30,10 @@ public class Quiz {
         questions.add(new MultipleChoiceQuestion(question, correctAnswer, wrongAnswers));
     }
 
+    public int getQuestionsCount() {
+        return questions.size();
+    }
+
     public Question getQuestion(int index) {
         return questions.get(index);
     }
