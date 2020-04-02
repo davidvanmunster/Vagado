@@ -2,9 +2,11 @@ package nl.han.ooad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
 
+    private Scanner scanner = new Scanner(System.in);
     private Quiz currentQuiz;
     private List<Quiz> quizzes = new ArrayList<>();
     private Player player;
@@ -14,7 +16,7 @@ public class Game {
         this.player = player;
 
 
-        quizzes.add(new Quiz(5, true));
+        quizzes.add(new Quiz("Trivia", 5, true));
         quizzes.get(0).addOpenQuestion(
                 "Wat is het snelst verkocht product in winkels de laatste periode?", new ArrayList<>(List.of(
                         new Answer("toiletpapier"),
@@ -88,11 +90,37 @@ public class Game {
                         new Answer("€13.000 tot €17.000"),
                         new Answer("€9.000 tot €13.000")
                 )));
+
+        quizzes.add(new Quiz("Test Trivia", 5, true));
+        quizzes.get(1).addMultipleChoiceQuestion(
+                "1 3 1 6 1 9 ? ?", new Answer("1 12"), new ArrayList<>(List.of(
+                        new Answer("1 11"),
+                        new Answer("200"),
+                        new Answer("Kan je niet weten.")
+                )));
     }
 
-    public void selectQuiz(int quizId) {
+    public void play() {
+        while (true) {
+            System.out.println("\nPlease select a quiz: ");
+            for (int i = 0; i < quizzes.size(); i++) {
+                System.out.println(i + ": " + quizzes.get(i).getName());
+            }
+            String quizId = scanner.nextLine();
+            selectQuiz(Integer.parseInt(quizId));
+            for (int i = 0; i < currentQuiz.getQuestionsCount(); i++) {
+                System.out.println(getCurrentQuestion().getQuestion());
+                String answer = scanner.nextLine();
+                printAnswerFeedback(answerQuestion(new Answer(answer)));
+            }
+            printResults();
+            currentQuestionIndex = 0;
+        }
+    }
+
+    private void selectQuiz(int quizId) {
         currentQuiz = quizzes.get(quizId);
-        currentQuestionIndex = 0;
+        currentQuiz.startStopWatch();
     }
 
     public boolean answerQuestion(Answer inputAnswer) {
@@ -103,14 +131,24 @@ public class Game {
 
     public void printAnswerFeedback(boolean checkedAnswer) {
         if (checkedAnswer) {
-            System.out.println("Correct answer!");
+            System.out.println("Correct answer!\n");
         } else {
-            System.out.println("Incorrect answer!");
+            System.out.println("Incorrect answer!\n");
         }
     }
 
-    public Quiz getCurrentQuiz() {
-        return currentQuiz;
+    public void printResults() {
+        Results results = currentQuiz.getResults();
+        String print = "Congratulations!";
+        if (results.isHighScoreBeaten()) {
+            print += "\nYou've beaten your high score with: " + results.getTotalScore();
+        } else {
+            print += "\nTotal score: " + results.getTotalScore();
+        }
+        print += "\nIncluding " + results.getBonusScore() + " bonus points.";
+        player.addBalance(results.getCoins());
+        print += "\nYou've received " + results.getCoins() + " coins.";
+        System.out.println(print);
     }
 
     public Question getCurrentQuestion() {

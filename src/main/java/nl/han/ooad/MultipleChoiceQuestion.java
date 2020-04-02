@@ -25,6 +25,7 @@ public class MultipleChoiceQuestion extends Question {
 
     @Override
     public boolean checkAnswer(Answer inputAnswer) {
+        if (inputAnswer.getAnswer().equals("")) return false;
         return correctAnswer.getAnswer().equals(letterAnswerMap.get(inputAnswer.getAnswer().toUpperCase().charAt(0))) || correctAnswer.getAnswer().equals(inputAnswer.getAnswer());
     }
 
